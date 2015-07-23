@@ -2,8 +2,8 @@
 
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var esperanto = require('esperanto');
-var map = require('vinyl-map');
+// var esperanto = require('esperanto');
+// var map = require('vinyl-map');
 var jetpack = require('fs-jetpack');
 
 var utils = require('./utils');
@@ -13,23 +13,24 @@ var srcDir = projectDir.cwd('./app');
 var destDir = projectDir.cwd('./build');
 
 var paths = {
-    jsCodeToTranspile: [
-        'app/**/*.js',
-        '!app/main.js',
-        '!app/spec.js',
-        '!app/node_modules/**',
-        '!app/bower_components/**',
-        '!app/vendor/**'
-    ],
+    // jsCodeToTranspile: [
+    //     'app/**/*.js',
+    //     '!app/main.js',
+    //     '!app/spec.js',
+    //     '!app/node_modules/**',
+    //     '!app/bower_components/**',
+    //     '!app/vendor/**'
+    // ],
     toCopy: [
         'app/main.js',
         'app/spec.js',
         'app/node_modules/**',
         'app/bower_components/**',
         'app/vendor/**',
-        'app/**/*.html'
+        'app/**/*.html',
+        'app/scripts/*'
     ],
-}
+};
 
 // -------------------------------------
 // Tasks
@@ -50,7 +51,7 @@ gulp.task('copy', ['clean'], copyTask);
 gulp.task('copy-watch', copyTask);
 
 
-var transpileTask = function () {
+/*var transpileTask = function () {
     return gulp.src(paths.jsCodeToTranspile)
     .pipe(map(function(code, filename) {
         try {
@@ -63,7 +64,7 @@ var transpileTask = function () {
     .pipe(gulp.dest(destDir.path()));
 };
 gulp.task('transpile', ['clean'], transpileTask);
-gulp.task('transpile-watch', transpileTask);
+gulp.task('transpile-watch', transpileTask);*/
 
 
 var sassTask = function () {
@@ -101,10 +102,10 @@ gulp.task('finalize', ['clean'], function () {
 
 
 gulp.task('watch', function () {
-    gulp.watch(paths.jsCodeToTranspile, ['transpile-watch']);
+    // gulp.watch(paths.jsCodeToTranspile, ['transpile-watch']);
     gulp.watch(paths.toCopy, ['copy-watch']);
     gulp.watch('app/**/*.scss', ['sass-watch']);
 });
 
 
-gulp.task('build', ['transpile', 'sass', 'copy', 'finalize']);
+gulp.task('build', [/*'transpile', */'sass', 'copy', 'finalize']);
